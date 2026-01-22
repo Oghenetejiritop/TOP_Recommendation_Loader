@@ -24,3 +24,6 @@ def tokenize_data(data):
     pass
 
 
+def generate_recommendations(data, similarity_score: float=0.5, similar_recommendations=10, alternative_recommendations=5):
+    pass
+
