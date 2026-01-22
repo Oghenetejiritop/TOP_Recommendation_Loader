@@ -18,3 +18,9 @@ nlp = load(language_model)
 
 def load_contents(data, num_data: int = 10):
     pass
+
+
+def tokenize_data(data):
+    pass
+
+
