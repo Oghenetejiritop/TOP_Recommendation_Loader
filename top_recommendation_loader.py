@@ -14,3 +14,7 @@ from spacy import load
 
 language_model = "en_core_web_lg"
 nlp = load(language_model)
+
+
+def load_contents(data, num_data: int = 10):
+    pass
