@@ -18,10 +18,13 @@ nlp = load(language_model)
 
 def load_contents(data, data_key: str, number_of_data: int = 10, nummber_of_content: int = 50):
     data_list = []
-    transformed_data = {}
 
     for data_index in range(0, number_of_data):
         data_item = data[data_index][data_key]
+        transformed_data = {data_key: data_item[:nummber_of_content]}
+        data_list.append(transformed_data)
+
+    return data_list
 
 
 def tokenize_data(data):
