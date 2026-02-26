@@ -25,13 +25,12 @@ def load_contents(data: list[dict[str, str]], data_key: str, number_of_data: int
 
 
 def tokenise_data(data: list[dict[str, str]], data_key: str):
-    nlp_docs = []
-
-    for data_item in data:
-        transformed_data = {data_key:  nlp(data_item[data_key])}
-        nlp_docs.append(transformed_data)
-
-    return nlp_docs
+    text_data = [data_item[data_key] for data_item in data]
+    docs = list(nlp.pipe(text_data))
+    return [
+        {data_key: doc}
+        for doc in docs
+    ]
 
 
 def generate_recommendations(data, similarity_score: float=0.5, similar_recommendations=10, alternative_recommendations=5):
