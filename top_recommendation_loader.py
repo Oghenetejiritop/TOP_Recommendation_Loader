@@ -16,8 +16,12 @@ language_model = "en_core_web_lg"
 nlp = load(language_model)
 
 
-def load_contents(data, num_data: int = 10):
-    pass
+def load_contents(data, data_key: str, number_of_data: int = 10, nummber_of_content: int = 50):
+    data_list = []
+    transformed_data = {}
+
+    for data_index in range(0, number_of_data):
+        data_item = data[data_index][data_key]
 
 
 def tokenize_data(data):
