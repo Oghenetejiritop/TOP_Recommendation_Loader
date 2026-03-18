@@ -1,9 +1,10 @@
 
 """
+    TOP Recommendation Loader Library
 
-    TOP recommendation loader library implements a SpaCy-based module to generate content recommendations using Natural Language Processing (NLP)  similarity techniques.
+    This library implements a spaCy-based module to generate content recommendations using Natural Language Processing (NLP) similarity techniques.
 
-    It reads content from file sources such as CSV, JSON, and other supported formats to analyse and recommend related content based on similarity levels.
+    It reads content from file sources such as CSV, JSON, and other supported formats, analyzes them, and recommends related content based on similarity levels.
 
 Author: Oghenetejiri Peace Onosajerhe.
  """
@@ -11,12 +12,18 @@ Author: Oghenetejiri Peace Onosajerhe.
 
 #imports#
 from spacy import load
+from spacy.tokens import Doc
 
 language_model = "en_core_web_lg"
 nlp = load(language_model)
 
 
-def load_contents(data: list[dict[str, str]], data_key: str, number_of_data: int = 10, number_of_content: int = 50):
+def load_contents(
+        data: list[dict[str, str]],
+                  data_key: str,
+                  number_of_data: int = 10,
+                  number_of_content: int = 50
+                  ):
 
     return [
         {data_key: data_item[data_key][:number_of_content]}
@@ -24,7 +31,11 @@ def load_contents(data: list[dict[str, str]], data_key: str, number_of_data: int
     ]
 
 
-def tokenise_data(data: list[dict[str, str]], data_key: str):
+def tokenise_data(
+        data: list[dict[str, str]],
+                  data_key: str
+                  ):
+    
     text_data = [data_item[data_key] for data_item in data]
     docs = list(nlp.pipe(text_data))
     return [
@@ -33,6 +44,37 @@ def tokenise_data(data: list[dict[str, str]], data_key: str):
     ]
 
 
-def generate_recommendations(data, similarity_score: float=0.5, similar_recommendations=10, alternative_recommendations=5):
-    pass
+def generate_recommendations(
+        data: list[dict[str, Doc]],
+        data_key: str,
+        lookup_recommendation_value: Doc,
+        similarity_score: float=0.5,
+        number_of_recommendations=10
+        ):
+    
+    similar_recommendations = []
 
+    for data_item in data:
+        doc = data_item[data_key]
+        current_score = lookup_recommendation_value.similarity(doc)
+
+        if current_score >= similarity_score:
+            similar_recommendations.append((current_score, doc.text))
+
+    similar_recommendations.sort(key=lambda d: d[0], reverse=True)
+    top_recommendations = similar_recommendations[:number_of_recommendations]
+
+    return [
+        {data_key: content, "similarity_score": score}
+        for score, content in top_recommendations
+    ]
+
+
+def generate_alternative_recommendations(
+        data: list[dict[str, Doc]],
+        data_key: str,
+        lookup_recommendation_value: Doc,
+        similarity_score: float=0.3,
+        number_of_alternative_recommendations=10
+        ):
+    pass
