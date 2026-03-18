@@ -74,7 +74,24 @@ def generate_alternative_recommendations(
         data: list[dict[str, Doc]],
         data_key: str,
         lookup_recommendation_value: Doc,
-        similarity_score: float=0.3,
+        min_score: float=0.3,
+        similarity_score: float=0.5,
         number_of_alternative_recommendations=10
         ):
-    pass
+    
+    alternative_recommendations = []
+
+    for data_item in data:
+        doc = data_item[data_key]
+        current_score = lookup_recommendation_value.similarity(doc)
+
+        if min_score <= current_score <  similarity_score :
+            alternative_recommendations.append((current_score, doc.text))
+
+    alternative_recommendations.sort(key=lambda d: d[0], reverse=True)
+    top_recommendations = alternative_recommendations[:number_of_alternative_recommendations]
+
+    return [
+        {data_key: content, "similarity_score": score}
+        for score, content in top_recommendations
+    ]
