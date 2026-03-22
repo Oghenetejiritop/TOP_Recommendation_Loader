@@ -53,7 +53,7 @@ def tokenise_data(
 def generate_recommendations(
         data: list[dict[str, Doc]],
         data_key: str,
-        lookup_recommendation_value: Doc,
+        query: Doc,
         similarity_score: float=0.5,
         number_of_recommendations=10
         ):
@@ -62,7 +62,7 @@ def generate_recommendations(
 
     for data_item in data:
         doc = data_item[data_key]
-        current_score = lookup_recommendation_value.similarity(doc)
+        current_score = query.similarity(doc)
 
         if current_score >= similarity_score:
             similar_recommendations.append((current_score, doc.text))
@@ -79,7 +79,7 @@ def generate_recommendations(
 def generate_alternative_recommendations(
         data: list[dict[str, Doc]],
         data_key: str,
-        lookup_recommendation_value: Doc,
+        query: Doc,
         min_score: float=0.3,
         similarity_score: float=0.5,
         number_of_alternative_recommendations=10
@@ -89,7 +89,7 @@ def generate_alternative_recommendations(
 
     for data_item in data:
         doc = data_item[data_key]
-        current_score = lookup_recommendation_value.similarity(doc)
+        current_score = query.similarity(doc)
 
         if min_score <= current_score <  similarity_score :
             alternative_recommendations.append((current_score, doc.text))
