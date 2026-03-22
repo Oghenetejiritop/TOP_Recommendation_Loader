@@ -12,10 +12,16 @@ Author: Oghenetejiri Peace Onosajerhe.
 
 #imports#
 from spacy import load
+from spacy.cli import download
 from spacy.tokens import Doc
 
 language_model = "en_core_web_lg"
-nlp = load(language_model)
+
+try:
+    nlp = load(language_model)
+except OSError:
+    download(language_model)
+    nlp = load(language_model)
 
 
 def load_contents(
