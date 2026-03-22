@@ -128,12 +128,13 @@ Primary Recommendations:
 Alternative Recommendations:
 {'content': 'Artificial Intelligence is transforming industries.', 'similarity_score': 0.42}
  
- ##Author
+ ## Author
+ 
 Oghenetejiri Peace Onosajerhe
 - [GitHub](https://github.com/oghenetejiritop)
 - [LinkedIn](https://linkedin.com/in/oghenetejiritop) 
 
- ##License
+ ## License
 
  This project is licensed under the MIT License.
 
